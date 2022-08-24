@@ -3,20 +3,23 @@ import React, { useState } from 'react'
 export default function TextForm(props) {
     const [text, settext] = useState("");
     const handleUpClick = () => {
-        // console.log("Uppercase was clicked"+text);
         let newText = text.toUpperCase();
         settext(newText);
+        props.showAlert("Converted to uppercase","success");
     }
     const handleLowClick = () => {
         let newText = text.toLowerCase();
         settext(newText);
+        props.showAlert("Converted to lowercase","success");
     }
     const clearTextArea = () => {
         if(window.confirm("Do you really want to clear the text?")){
             settext("")
+            props.showAlert("Text cleared","success");
         }else{
             let newText = text;
             settext(newText);
+            props.showAlert("Text not cleared","success");
         }
 
     }
@@ -24,10 +27,12 @@ export default function TextForm(props) {
         let text=document.getElementById("mybox");
         text.select();
         navigator.clipboard.writeText(text.value);
+        props.showAlert("Text copied successfully","success");
     }
     const removeSpace = () => {
         let newText=text.split(/[ ]+/);
         settext(newText.join(" "));
+        props.showAlert("Extra spaces removed","success");
         
     }
     const upperFirstLetter=()=>{
@@ -38,6 +43,7 @@ export default function TextForm(props) {
             splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);     
         }
         settext(splitStr.join(' '));
+        props.showAlert("First letter of words converted to uppercase","success");
     }
     const handleOnChange = (event) => {
         // console.log("On change");
